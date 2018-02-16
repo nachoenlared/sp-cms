@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="template/head :: head" th:remove="tag"></head>
+
+  <body>
+  	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  		<div th:insert="template/header :: body" th:remove="tag"></div>
+		  	<main class="mdl-layout__content">
+			    <div class="page-content">
+			    	
+			    	<div th:if="${page.listaMensajeError!=null}" th:each="mensajeError: ${page.listaMensajeError}">
+			    		<span class="mdl-chip mdl-color--red">
+						    <span class="mdl-chip__text mdl-color--red" th:text="#{${mensajeError}}"></span>
+						    
+						</span>	
+			    	</div>
+			    	
+			    	<div th:if="${page.listaMensajeExito!=null}" th:each="mensajeExito: ${page.listaMensajeExito}">
+			    		<span class="mdl-chip mdl-color--green">
+						    <span class="mdl-chip__text mdl-color--green" th:text="#{${mensajeExito}}"></span>
+						    
+						</span>			    		
+			    	</div>
+			    	
+			    	<div th:insert="${page.viewContentName}" th:remove="tag"></div>
+			    </div>
+			</main>
+			<div th:insert="template/footer :: body" th:remove="tag"></div>
+  		</div>
+  		
+  	</div>
+        
+    </body>
+</html>

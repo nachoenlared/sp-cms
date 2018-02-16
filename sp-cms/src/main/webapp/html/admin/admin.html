@@ -1,0 +1,8 @@
+<h2 th:text="#{''+${page.titleName}}">Bienvenido Admin</h2>
+
+<ul class="mdl-list">
+	<li class="mdl-list__item" th:each="menuDto: ${listaOpcionesMenuAdmin}">
+		<a class="mdl-navigation__link" th:href="${menuDto.vinculo}" th:text="${menuDto.descripcion}" >
+		</a>
+	</li>
+</ul>

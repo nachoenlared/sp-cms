@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <body>
+  	<header class="mdl-layout__header">
+		<div class="mdl-layout__header-row">
+	    	<!-- Title -->
+	      	<span class="mdl-layout-title" th:text="#{''+${page.titleName}}">Title</span>
+	      	<!-- Add spacer, to align navigation to the right -->
+	      	<div class="mdl-layout-spacer"></div>
+	      	<!-- Navigation. We hide it in small screens. -->
+	      	<nav class="mdl-navigation mdl-layout--large-screen-only">
+	      		<div th:each="menuDto: ${page.getListaMenuDto()}" th:remove="tag">
+	      			<a th:id="${menuDto.getDescripcion()}" class="mdl-navigation__link" th:href="${menuDto.getVinculo()}" th:text="${menuDto.getDescripcion()}" th:if="${menuDto.getListaMenuHijos().isEmpty()}">prueba</a>
+	      			<a th:id="${menuDto.getDescripcion()}" class="mdl-navigation__link" href="#" th:text="${menuDto.getDescripcion()}" th:if="${!menuDto.getListaMenuHijos().isEmpty()}">prueba</a>
+		      		<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" th:for="${menuDto.getDescripcion()}" th:if="${!menuDto.getListaMenuHijos().isEmpty()}">
+						<a class="mdl-menu__item" th:each="subMenuDto: ${menuDto.getListaMenuHijos()}" th:text="${subMenuDto.descripcion}" th:href="${subMenuDto.vinculo}">
+						</a>
+					</ul>
+	      		</div>
+	      	</nav>
+		</div>
+	</header>
+	  
+	<div class="mdl-layout__drawer">
+		<span class="mdl-layout-title" th:text="#{''+${page.titleName}}">Title</span>
+		<nav class="mdl-navigation">
+			<div th:each="menuDto: ${page.getListaMenuDto()}" th:remove="tag">
+				<a th:id="${menuDto.getDescripcion()}" class="mdl-navigation__link" th:href="${menuDto.getVinculo()}" th:text="${menuDto.getDescripcion()}">prueba</a>
+			</div>
+		</nav>
+	</div>
+	
+</body>
+  
+</html>

@@ -1,0 +1,8 @@
+<h1>Welcome to login</h1>
+<form name="f" th:action="@{'/login'}" method="POST">
+	<table>
+		<tr><td>Usuario:</td><td><input type="text" name="username" value=''></td></tr>
+		<tr><td>Pass:</td><td><input type="password" name="password"/></td></tr>
+		<tr><td><input name="submit" type="submit" value="Login"/></td><td><a href="/register">Register</a></td></tr>
+	</table>
+</form>
