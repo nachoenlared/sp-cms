@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import static org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN;
+
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
@@ -21,6 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.csrf().disable()
+			.headers().frameOptions().sameOrigin().and()
 			.logout()
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/login")
@@ -31,7 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.authorizeRequests()
 				.antMatchers("/index").hasRole("USER")
-				.antMatchers("/admin**").hasRole("ADMIN")				
+				.antMatchers("/admin**").hasRole("ADMIN")
+				.antMatchers("/h2/**").permitAll()
 				.antMatchers("/statics/**").permitAll()
 				.antMatchers("/register").permitAll()
 				.anyRequest().authenticated()

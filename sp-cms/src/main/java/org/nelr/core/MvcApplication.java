@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -39,19 +40,10 @@ import org.thymeleaf.templatemode.TemplateMode;
 @EnableJpaRepositories(basePackages="org.nelr.repository")
 @EnableTransactionManagement
 @ComponentScan("org.nelr")
-public class MvcApplication extends WebMvcConfigurerAdapter{
+public class MvcApplication implements WebMvcConfigurer {
 
 	private static final Logger logger = LoggerFactory.getLogger(MvcApplication.class);
-	
-	@Bean
-	 public RequestMappingHandlerMapping requestMappingHandlerMapping() {
-	  RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
-	  handlerMapping.setUseSuffixPatternMatch(false);
-	  handlerMapping.setUseTrailingSlashMatch(false);
 
-	  return handlerMapping;
-	 }
-	
 	@Bean
     public SpringResourceTemplateResolver templateResolver(){
         // SpringResourceTemplateResolver automatically integrates with Spring's own
@@ -118,55 +110,5 @@ public class MvcApplication extends WebMvcConfigurerAdapter{
         return viewResolver;
     }
 
-    @Bean
-    public DriverManagerDataSource dataSource() {
-    	DriverManagerDataSource builder = new DriverManagerDataSource();
-    	builder.setDriverClassName("com.mysql.jdbc.Driver");
-    	builder.setUsername("root");
-    	//builder.setPassword(environment.getRequiredProperty("password"));
-    	builder.setUrl("jdbc:mysql://localhost:3306/template");
-      return builder;
-    }
 
-    @Bean
-    public EntityManagerFactory entityManagerFactory() {
-
-      HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-      vendorAdapter.setDatabase(Database.MYSQL);
-      vendorAdapter.setGenerateDdl(true);
-
-      LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-      factory.setJpaVendorAdapter(vendorAdapter);
-      factory.setPackagesToScan("org.nelr");
-      factory.setDataSource(dataSource());
-      
-      factory.afterPropertiesSet();
-      
-      
-      return factory.getObject();
-    }
-    
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
-       JpaTransactionManager transactionManager = new JpaTransactionManager();
-       transactionManager.setEntityManagerFactory(emf);
-  
-       return transactionManager;
-    }
-    /*
-    public HibernateJpaSessionFactoryBean sessionFactory() {
-    	HibernateJpaSessionFactoryBean hibernateJpaSessionFactoryBean = new HibernateJpaSessionFactoryBean();
-        hibernateJpaSessionFactoryBean.setEntityManagerFactory(entityManagerFactory());
-        return hibernateJpaSessionFactoryBean;
-    }
-    
-    @Bean
-    public PlatformTransactionManager transactionManager() {
-
-      JpaTransactionManager txManager = new JpaTransactionManager();
-      txManager.setEntityManagerFactory(entityManagerFactory().getObject());
-      txManager.setDataSource(dataSource());
-      return txManager;
-    }
-    */
 }
