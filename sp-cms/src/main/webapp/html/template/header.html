@@ -25,9 +25,15 @@
 	  
 	<div class="mdl-layout__drawer">
 		<span class="mdl-layout-title" th:text="#{''+${page.titleName}}">Title</span>
+		<hr/>
 		<nav class="mdl-navigation">
 			<div th:each="menuDto: ${page.getListaMenuDto()}" th:remove="tag">
-				<a th:id="${menuDto.getDescripcion()}" class="mdl-navigation__link" th:href="${menuDto.getVinculo()}" th:text="${menuDto.getDescripcion()}">prueba</a>
+				<a th:id="${menuDto.getDescripcion()}" class="mdl-navigation__link" th:href="${menuDto.getVinculo()}" th:text="${menuDto.getDescripcion()}" th:if="${menuDto.getListaMenuHijos().isEmpty()}">prueba</a>
+				<span th:text="${menuDto.getDescripcion()}" class="categoria-menu" th:if="${!menuDto.getListaMenuHijos().isEmpty()}">Title</span>
+				<!--<a th:id="${menuDto.getDescripcion()}" class="mdl-navigation__link" href="#" th:text="${menuDto.getDescripcion()}" th:if="${!menuDto.getListaMenuHijos().isEmpty()}">prueba</a>-->
+				<a class="mdl-navigation__link" th:each="subMenuDto: ${menuDto.getListaMenuHijos()}" th:text="${subMenuDto.descripcion}" th:href="${subMenuDto.vinculo}"></a>
+
+
 			</div>
 		</nav>
 	</div>

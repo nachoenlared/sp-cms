@@ -3,12 +3,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 	<head th:fragment="head">
+
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title th:text="#{''+${page.titleName}}">NachoEnLaRed - Template</title>
+
+		<link rel="stylesheet" th:href="${page.baseUrl+'/statics/css/mdl/material.min.css'}">
+		<script th:src="${page.baseUrl+'/statics/css/mdl/material.min.js'}"></script>
+
+		<link rel="stylesheet" th:href="${page.baseUrl+'/statics/css/spcms.css'}">
+
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-		<link rel="stylesheet" th:href="${page.baseUrl+'/statics/css/material.css'}">
-		<script th:src="${page.baseUrl+'/statics/css/material.js'}"></script>
-		<!-- <link rel="stylesheet" href="./statics/css/style.css" /> -->
+
+
+
 	</head>
 
 	<body>
